@@ -1,8 +1,24 @@
 ﻿#include "Date.h"
+#include "Part_1.h"
+#include "IError.h"
+
+void check(int a) {
+    if (cin.fail()) {
+        cin.clear();
+        a = 0;
+        cin.ignore();
+        throw IncorrectInput();
+    }
+}
+
+
 
 int main()//тесты
 {
-    Date a(2022,Oct,30,30,54,21);
+
+    menu_patr_1();
+
+    /*Date a(2022,Oct,30,30,54,21);
     Date b(2022, Oct, 30);
     Date c(30, 54, 21);
     Date d;
@@ -26,7 +42,5 @@ int main()//тесты
     cout << c.getIntevals(a) << endl;
     cout << d.getIntevals(a) << endl;
 
-    string s = "2020 year 28 Jun 13:43:00 asdasdasdasd";
-
-    //menu_patr_1();
+    string s = "2020 year 28 Jun 13:43:00 asdasdasdasd";*/
 }

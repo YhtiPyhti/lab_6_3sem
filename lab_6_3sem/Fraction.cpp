@@ -1,5 +1,5 @@
 #include "Fraction.h"
-
+#include "IError.h"
 Fraction::Fraction() {
     log += "CREATE OBJECT\n";
     num = 0;
@@ -8,8 +8,7 @@ Fraction::Fraction() {
 
 Fraction::Fraction(Numerator a, Denominator b) {
     if (b.den == 0) {
-        cerr << "Integer division by zero!";
-        exit(1);
+        throw DivisionByZero();
     }
 
     num = a.num / abs(nod(a.num, b.den));
@@ -143,9 +142,13 @@ string Fraction::get_log() {
 }
 
 void Fraction::set(const Numerator& a, const Denominator& b) {
+    if (b.den == 0) {
+        throw DivisionByZero();
+    }
     log += "SET VALUES\n";
     num = a.num;
     den = b.den;
+
 }
 
 int Fraction::nod(int a, int b)
