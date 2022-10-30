@@ -2,23 +2,12 @@
 #include "Part_1.h"
 #include "IError.h"
 
-void check(int a) {
-    if (cin.fail()) {
-        cin.clear();
-        a = 0;
-        cin.ignore();
-        throw IncorrectInput();
-    }
-}
-
-
-
-int main()//тесты
+int main()
 {
 
-    menu_patr_1();
+    //menu_patr_1();
 
-    /*Date a(2022,Oct,30,30,54,21);
+    Date a(2022,Oct,30,30,54,21);
     Date b(2022, Oct, 30);
     Date c(30, 54, 21);
     Date d;
@@ -41,6 +30,19 @@ int main()//тесты
     cout << b.getIntevals(a) << endl;
     cout << c.getIntevals(a) << endl;
     cout << d.getIntevals(a) << endl;
+    cout << endl;
 
-    string s = "2020 year 28 Jun 13:43:00 asdasdasdasd";*/
+    try {
+        string s;
+        cout << "Input your text with date (Month, number, year, hours, min, sec your text): ";
+        getline(cin,s);
+
+        DateInterval red;
+
+       cout << red.formatDate(s);
+    }
+    catch (IncorrectInput& e) {
+        e.print();
+        main();
+    }
 }

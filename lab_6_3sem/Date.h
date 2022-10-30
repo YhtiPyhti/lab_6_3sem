@@ -92,6 +92,7 @@ public:
 
 protected:
     int count = 0, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
+    string arr[12] = { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sem","Oct","Nov","Dec" };
 
 };
 
@@ -145,6 +146,7 @@ public:
 
 private:
     int count = 0, year = 0, month = 0, day = 0, hour = 0, min = 0, sec = 0;
+    string arr[12] = { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sem","Oct","Nov","Dec" };
 };
 
 

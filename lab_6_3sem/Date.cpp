@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Date.h"
+#include "IError.h"
 
 DateInterval Date::getIntevals(const Date& another) const {
     int year = this->year - another.year;
@@ -160,7 +161,6 @@ Date Date::addSeconds(int a) {
 
 string Date::toString() const {
     stringstream ss;
-    string arr[12] = { "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sem","Oct","Nov","Dec" };
     ss << year << "-" << arr[month - 1] << "-" << day << "  " << hour << "::" << min << "::" << sec;
     return ss.str();
 }
@@ -266,15 +266,49 @@ DateInterval::DateInterval(const DateInterval& a) {
     min = a.min;
     sec = a.sec;
 }
-
+//Monday, June 15,2009 1:45:30 PM xcvzxc 32 qwe x23 2q3 aasd
 string DateInterval::formatDate(string format) {
     string s;
+    stringstream ss;
+    int a = 0, k = 0;
+    int arr_num[7];
+    bool end = false;
     for (size_t i = 0; i < format.size(); i++)
     {
-        if (format[i] == ' ') {
-
+        for (size_t j = 0; j < sizeof(arr) / sizeof(arr[0]); j++)
+        {
+            if (format[i] == arr[j][0] && format[i + 1] == arr[j][1] && format[i + 2] == arr[j][2]) {
+                arr_num[k] = j + 1;
+                k++;
+            }
         }
-        else s += format[i];
+
+        if (!end && format[i] >= 48 && format[i] <= 57) {
+            a *= 10;
+            a += (format[i] - 48);
+        }
+        else if (!end && (format[i] == ',' || format[i] == ' ' || format[i] == ':') && a != 0) {
+            arr_num[k] = a;
+            a = 0;
+            k++;
+        }
+        else if (!end && (format[i] == 'P' || format[i] == 'A') && format[i + 1] == 'M') {
+            arr_num[k] = format[i];
+            end = true;
+        }
+        else if (end) {
+            s = format.substr(i + 1, format.size());
+            break;
+        }
     }
-    return s;
+
+    if (k < 6) throw IncorrectInput();
+
+    if (arr_num[6] == 80) {
+        arr_num[3] += 12;
+        arr_num[3] %= 24;
+    }
+
+    ss << "Date: " << arr_num[2] << "/" << arr_num[0] << "/" << arr_num[1] << " " << arr_num[3] << ":" << arr_num[4] << ":" << arr_num[5] << "\nText:" << s;
+    return ss.str();
 }
